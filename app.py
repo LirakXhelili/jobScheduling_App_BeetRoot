@@ -67,19 +67,77 @@ def delete_job():
     except Exception as e:
         return render_template('error.html', error="An error occurred")
 
+def bubbleSort(arr, compareFunction):
+    N = len(arr)
+    for i in range(N - 1):
+        for j in range(N - i - 1):
+            if compareFunction(arr[j], arr[j + 1]) < 0:
+                temp = arr[j]
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
+# MILOTI QKA E KA BO 
+# def greedyJobScheduling(jobs, original_indices, deadlines, profits):
+#     N = len(deadlines)
+#     indices = list(range(N))
+#     bubbleSort(indices, lambda a, b: profits[a] - profits[b])
+
+#     result = ['-'] * N
+
+#     for i in range(N):
+#         for j in range(min(N, deadlines[indices[i]]) - 1, -1, -1):
+#             if result[j] == '-':
+#                 result[j] = jobs[indices[i] - 1]  # Use the original index to get the job from the unsorted list
+#                 break
+
+#     return result
+
+# Liraku:
+def greedyJobScheduling(jobs, original_indices, deadlines, profits):
+    N = len(deadlines)
+    indices = list(range(N))
+    bubbleSort(indices, lambda a, b: jobs[a].profit - jobs[b].profit)
+
+    result = ['-'] * N
+
+    for i in range(N):
+        for j in range(min(N, deadlines[indices[i]]) - 1, -1, -1):
+            if result[j] == '-':
+                result[j] = jobs[indices[i]]
+                break
+
+    return result
+
 
 
 @app.route('/sort')
 def sort():
     try:
         jobs = Job.query.all()
-        original_indices = list(range(1, len(jobs)+1))  # Original indices starting from 1
+        original_indices = list(range(1, len(jobs)+1))  
         deadlines = [job.deadline for job in jobs]
         profits = [job.profit for job in jobs]
 
         sorted_schedule = greedyJobScheduling(jobs, original_indices, deadlines, profits)
 
-        # Remove empty slots from the sorted schedule
+
+        sorted_schedule = [job for job in sorted_schedule if job != '-']
+
+        return render_template('index.html', sorted_jobs=sorted_schedule, jobs=jobs, original_indices=original_indices)
+
+    except Exception as e:
+        return render_template('error.html', error="An error occurred during sorting: " + str(e))
+
+@app.route('/short_job_first', methods=['GET', 'POST'])
+def short_job_first():
+    try:
+        jobs = Job.query.all()
+        original_indices = list(range(1, len(jobs) + 1))  
+        deadlines = [job.deadline for job in jobs]
+        profits = [job.profit for job in jobs]
+
+        sorted_schedule = shortJobScheduling(jobs, original_indices, deadlines, profits)
+
+
         sorted_schedule = [job for job in sorted_schedule if job != '-']
 
         return render_template('index.html', sorted_jobs=sorted_schedule, jobs=jobs, original_indices=original_indices)
@@ -88,17 +146,73 @@ def sort():
         return render_template('error.html', error="An error occurred during sorting: " + str(e))
 
 
+def shortJobScheduling(jobs, original_indices, deadlines, profits):
+    N = len(deadlines)
+    indices = list(range(N))
+    
+
+    indices.sort(key=lambda i: deadlines[i])
+
+    result = ['-'] * N
+
+    for i in range(N):
+        for j in range(N):
+            if result[j] == '-':
+                result[j] = jobs[indices[i]]
+                break
+
+    return result
+
+   
+
+@app.route('/priority_scheduling', methods=['GET', 'POST'])
+def priority_scheduling():
+    try:
+        jobs = Job.query.all()
+        original_indices = list(range(1, len(jobs) + 1))
+        profits = [job.profit for job in jobs]
+
+
+        sorted_schedule = priorityScheduling(jobs, original_indices, profits)
+
+        return render_template('index.html', sorted_jobs=sorted_schedule, jobs=jobs, original_indices=original_indices)
+
+    except Exception as e:
+        return render_template('error.html', error="An error occurred during sorting: " + str(e))
+
+
+def priorityScheduling(jobs, original_indices, profits):
+    N = len(profits)
+    indices = list(range(N))
+    
+
+    bubbleSort(indices, lambda b, a: jobs[b].profit - jobs[a].profit)
+
+    result = ['-'] * N
+
+    for i in range(N):
+        for j in range(N):
+            if result[j] == '-':
+                result[j] = jobs[indices[i]]
+                break
+
+    return result
+
+
+# First-Come-First-Serve (FCFS) Scheduling
+
+
 def fcfsScheduling(jobs):
-    # Sort jobs by their original order of arrival using a loop
+
     for i in range(len(jobs)):
         for j in range(0, len(jobs) - i - 1):
             if jobs[j].id > jobs[j + 1].id:
-                # Swap jobs if they are out of order
+
                 jobs[j], jobs[j + 1] = jobs[j + 1], jobs[j]
 
     return jobs
 
-# ... (rest of the code)
+
 
 @app.route('/fcfs', methods=['GET', 'POST'])
 def fcfs():
@@ -106,7 +220,7 @@ def fcfs():
         jobs = Job.query.all()
         original_indices = list(range(1, len(jobs) + 1))
 
-        # Sort jobs using FCFS
+
         sorted_schedule = fcfsScheduling(jobs)
 
         return render_template('index.html', sorted_jobs=sorted_schedule, jobs=jobs, original_indices=original_indices)
