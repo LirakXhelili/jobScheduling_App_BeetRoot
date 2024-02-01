@@ -1,0 +1,272 @@
+body {
+    background-color: black;
+    overflow:hidden;
+  }
+  * {
+    font-family: "Poppins", sans-serif;
+    /* font-weight: 100; */
+    font-style: normal;
+  }
+  .parent-container {
+    margin: 0 auto;
+    width: 100%;
+    display: block;
+  }
+  .child-container {
+    margin: 0 auto;
+    padding: 10px 0;
+    max-width: 80%;
+    background-color: white;
+    border-radius: 20px;
+  }
+  .parent-container h1 {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 4px;
+    font-size: 22px;
+  }
+  /* div buttonat e pare */
+  .parent-container .div-btn {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .parent-container .div-btn button {
+    margin: 0 5px;
+    background-color: black;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .parent-container .div-btn button:hover {
+    border: black solid 1px;
+    background-color: white;
+    color: black;
+    padding: 11px 31px;
+  }
+  .container {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+    height: 617px;
+  }
+  table {
+    width: 30%;
+    margin: 15px 0;
+    position: relative;
+    background-color: rgb(158, 158, 158);
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 0;
+  }
+  #tableJobs #index td {
+    color: white;
+    background-color: black;
+  }
+  tr,
+  th,
+  td {
+    background-color: white;
+    border-collapse: collapse;
+  }
+  table th {
+    border-radius: 4px;
+    /* background-color: rgb(233, 74, 16); */
+    color: black;
+    border-collapse: collapse;
+  }
+  table td {
+    /* border: 1px solid black; */
+    border-radius: 5px;
+  }
+  th,
+  td {
+    padding: 10px;
+    text-align: center;
+  }
+  th {
+    background-color: #F2F2F2;
+  }
+  #tableDeadlines tr  {
+    border-radius: 8px;
+  }
+  #tableSlots th {
+    border-radius: 8px;
+    border: none;
+  }
+  /* #tableProfits {
+    border: 1px solid black;
+    border-radius: 8px;
+    th {
+      background-color: rgb(233, 74, 16);
+      color: white;
+      border-radius: 8px 8px 0 0;
+    }
+    td {
+      border: 1px solid black;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+    }
+  }
+  */
+  /*ADD JOBS */
+  .round-button {
+    margin: 0 5px;
+    margin-top: 10px;
+    background-color: black;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .round-button:hover {
+    border: black solid 1px;
+    background-color: white;
+    color: black; background-color: white;
+    border: 1px ssoli;
+  }
+  .popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+  }
+  /* CLOSE MODAL*/
+  .popup .modal .close {
+    padding: 2px 8px;
+    font-size: x-large;
+  }
+  .popup .modal .close:hover {
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .modal {
+    width: 20%;
+    background: white;
+    padding: 60px 60px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+  }
+  .popup .modal .labels {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-weight: bold;
+    }
+    input {
+      padding: 8px;
+      border-radius: 4px;
+      border: 0.8px solid black
+    }
+  }
+  .popup .modal button {
+    margin: 8px 5px;
+    background-color: black;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .popup .modal button:hover {
+    background-color: rgb(125, 123, 123);
+    color: white;
+  }
+  /* Close button for the popup */
+  .close {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  /* responsive*/
+  @media (max-width: 830px) {
+    .child-container {
+      max-width: 80%;
+    }
+    table {
+      font-size: 12px;
+      width: 30%;
+    }
+    .parent-container .div-btn {
+      width: 80%;
+      margin: 0 auto;
+    }
+    .parent-container .div-btn button {
+      padding: 8px 16px;
+    }
+    /* Add more responsive styles as needed */
+  }
+  @media (max-width: 717px) {
+    .parent-container .div-btn  {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .parent-container .div-btn button {
+      margin-bottom: 5px;
+      padding: 8px 16px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+  @media (max-width: 400px) {
+    .parent-container .div-btn  {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .parent-container .div-btn button {
+      margin-bottom: 5px;
+      padding: 4px 10px;
+      font-size: 12px;
+    }
+  }
+  @media (max-width: 700px) {
+    .container .popup .modal button {
+      font-size: 12px;
+    }
+    .container .popup .modal {
+      font-size: 12px;
+      max-width: 30%;
+    }
+    .container .popup .modal .labels {
+      input {
+        padding: 4px;
+      }
+    }
+  }
+  @media (max-width: 550px) {
+    .container .popup .modal button {
+      font-size: 10px;
+    }
+    .container .popup .modal {
+      font-size: 12px;
+      max-width: 40%;
+    }
+  }
