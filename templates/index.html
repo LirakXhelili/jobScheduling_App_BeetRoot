@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+
+    <title>Job Scheduling</title>
+  </head>
+  <body>
+    <div class="parent-container">
+      <div class="child-container">
+        <h1>Job Scheduling using Greedy Algorithm</h1>
+
+        <div class="div-btn">
+          <div class="btn-greedy">
+            <a href="{{ url_for('sort') }}"><button>Sort</button></a>
+          <!-- <button onclick="playAlgorithm()">Play</button> -->
+
+          <button onclick="openJobModal()">Add Job</button>
+
+          <button onclick="openDeleteJobModal()">Delete Job</button>
+          <a href="{{ url_for('sorted') }}"><button>Visualize</button></a>
+          <button onclick="openSortDataModal()">Other Algorithms</button>
+
+          </div>
+          <div class="sort-btn">
+          </div>
+        </div>
+
+        
+        <div class="container">
+          <h3>Unsorted Data</h3>
+
+          <div class="table1">
+            <table id="unsortedTable">
+              <tbody>
+                <tr>
+                  <td><b>Index</b></td>
+                  {% for job in jobs%}
+
+                  <td>{{ loop.index}}</td>
+                  {% endfor%}
+                </tr>
+                <tr>
+                  <td><b>Job Name</b></td>
+                  {% for job in jobs%}
+
+                  <td>{{ job.job_name }}</td>
+                  {% endfor%}
+                </tr>
+                <tr>
+                  <td><b>Deadline</b></td>
+                  {% for job in jobs%}
+
+                  <td>{{ job.deadline }}</td>
+                  {% endfor%}
+                </tr>
+                <tr>
+                  <td><b>Profit</b></td>
+                  {% for job in jobs%}
+
+                  <td>{{ job.profit | int }}</td>
+                  {% endfor%}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Sorted Data</h3>
+
+          <div class="table2">
+            <table id="sortedTable">
+              <tbody>
+                <!-- Similar structure as the unsorted table -->
+                <!-- <tr>
+                  <td>Index</td>
+                  {% for job in sorted_jobs %}
+                  <td>{{ original_indices[loop.index0] }}</td>
+                  {% endfor %}
+                </tr>
+                <tr> -->
+                  <td><b>Job Name</b></td>
+                  {% for job in sorted_jobs %}
+                  <td>{{ job.job_name }}</td>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <td><b>Deadline</b></td>
+                  {% for job in sorted_jobs %}
+                  <td>{{ job.deadline }}</td>
+                  {% endfor %}
+                </tr>
+                <tr>
+                  <td><b>Profit</b></td>
+                  {% for job in sorted_jobs %}
+                  <td>{{ job.profit | int }}</td>
+                  {% endfor %}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+  
+        </div>
+
+        <!-- Sort Data Modal -->
+<div id="sortDataModal" class="popup">
+  <div class="modal">
+    <span class="close" onclick="closeSortDataModal()">&times;</span>
+    <h2>Sort Data Options</h2>
+    <a href="{{ url_for('short_job_first') }}"><button>Short Job First</button></a>
+    <a href="{{ url_for('priority_scheduling') }}"><button>Priority Scheduling</button></a>
+    <a href="{{ url_for('fcfs') }}"><button>First Come First Serve</button></a>
+
+  </div>
+</div>
+
+    
+        <div id="deleteJobModal" class="popup">
+            <div class="modal">
+                <span class="close" onclick="closeDeleteJobModal()">&times;</span>
+                <h2>Delete Job</h2>
+                <!-- Delete Job Form -->
+                <form method="POST" action="{{ url_for('delete_job') }}">
+                    <label for="delete_index">Select Index to Delete:</label>
+                    
+                    <select name="delete_index" id="delete_index">
+                        {% for job in jobs %}
+                            <option value="{{ job.id }}">{{ loop.index }}</option>
+                        {% endfor %}
+                    </select>
+        
+                    <button type="submit">Delete Job</button>
+                </form>
+            </div>
+        </div>
+        
+          
+          <div class="popup" id="jobModal">
+            <div class="modal">
+              <span class="close" onclick="closeAddJobModal()">&times;</span>
+              <h2>Add Job</h2>
+              <form method="POST" action="{{ url_for('add_job') }}" class="forms">
+                <label for="job_name">Job Name:</label>
+                <input type="text" id="job_name" name="job_name" required />
+        
+                <label for="deadline">Deadline:</label>
+                <input type="number" id="deadline" name="deadline" required max="10" />
+        
+                <label for="profit">Profit:</label>
+                <input type="number" id="profit" name="profit" required max="100" />
+        
+                <button type="submit">Add Job</button>
+              </form>
+            </div>
+          </div>      
+
+
+          
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
